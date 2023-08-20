@@ -23,6 +23,18 @@ $(document).ready(function(){
                             data: formattedData,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
+                        }, {
+                            label: 'Resistance Levels',
+                            data: resistanceData,
+                            borderColor: 'rgb(255, 0, 0)',
+                            borderDash: [5, 5],
+                            fill: false
+                        }, {
+                            label: 'Support Levels',
+                            data: supportData,
+                            borderColor: 'rgb(0, 255, 0)',
+                            borderDash: [5, 5],
+                            fill: false
                         }]
                     },
                     options: {
