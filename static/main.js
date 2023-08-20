@@ -43,19 +43,30 @@ $(document).ready(function(){
                 });
 
                 var candlestickCtx = document.getElementById('candlestick-chart').getContext('2d');
-                var candlestickChart = new Chart(candlestickCtx, {
-                    type: 'candlestick',
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
                     data: {
                         datasets: [{
-                            label: 'Candlestick',
-                            data: Object.values(data).map(d => ({
-                                t: new Date(d.date),
-                                o: d['1a. open (USD)'],
-                                h: d['2a. high (USD)'],
-                                l: d['3a. low (USD)'],
-                                c: d['4a. close (USD)']
-                            }))
+                            label: 'Close Price',
+                            data: formattedData,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grace: '5%',
+                                display: false,
+                                ticks: {
+                                    display: false
+                                }
+                            },
+                            x: {
+                                display: false
+                            }
+                        }
                     }
                 });
             },

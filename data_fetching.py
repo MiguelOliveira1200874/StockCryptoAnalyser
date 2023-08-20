@@ -4,7 +4,7 @@ import requests
 import pandas as pd
 
 # Function to fetch data from APIs
-def fetch_data(symbol, function_name, currency):
+def fetch_data(symbol, function_name, currency, date_range=None):
     # URL of the Alpha Vantage API endpoint
     url = "https://www.alphavantage.co/query"
 
