@@ -38,3 +38,26 @@ def analyze_data(data):
     data['Bollinger Bands'] = calculate_bollinger_bands(data)
 
     return data
+def calculate_rsi(data, period=14):
+    delta = data['4a. close (USD)'].diff()
+    up, down = delta.copy(), delta.copy()
+    up[up < 0] = 0
+    down[down > 0] = 0
+    average_gain = up.rolling(window=period).mean()
+    average_loss = abs(down.rolling(window=period).mean())
+    rs = average_gain / average_loss
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
+def calculate_macd(data, short_period=12, long_period=26, signal_period=9):
+    short_ema = data['4a. close (USD)'].ewm(span=short_period, adjust=False).mean()
+    long_ema = data['4a. close (USD)'].ewm(span=long_period, adjust=False).mean()
+    macd_line = short_ema - long_ema
+    signal_line = macd_line.ewm(span=signal_period, adjust=False).mean()
+    macd = macd_line - signal_line
+    return macd
+def calculate_bollinger_bands(data, window_size=20, num_of_std=2):
+    rolling_mean = data['4a. close (USD)'].rolling(window=window_size).mean()
+    rolling_std = data['4a. close (USD)'].rolling(window=window_size).std()
+    upper_band = rolling_mean + (rolling_std * num_of_std)
+    lower_band = rolling_mean - (rolling_std * num_of_std)
+    return upper_band, lower_band
