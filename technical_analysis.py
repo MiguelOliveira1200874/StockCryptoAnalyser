@@ -32,4 +32,9 @@ def analyze_data(data):
     # Detect the most important levels
     data['Important Levels'] = detect_important_levels(data, 5)
 
+    # Calculate the technical indicators
+    data['RSI'] = calculate_rsi(data)
+    data['MACD'] = calculate_macd(data)
+    data['Bollinger Bands'] = calculate_bollinger_bands(data)
+
     return data
