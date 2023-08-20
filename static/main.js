@@ -29,7 +29,8 @@ $(document).ready(function(){
                         scales: {
                             y: {
                                 beginAtZero: false,
-                                grace: '5%'
+                                grace: '5%',
+                                display: false
                             }
                         }
                     }
