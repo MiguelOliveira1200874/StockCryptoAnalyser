@@ -43,9 +43,6 @@ if __name__ == "__main__":
             agent.learn(state, action, reward, next_state, done)
             state = next_state
 
-    # Create the user interface and get the symbol from the user
-    symbol = create_interface(agent, env, preprocessed_data)
-
     from data_fetching import fetch_data
 
     # Check if the symbol is for a stock or a cryptocurrency
@@ -67,6 +64,9 @@ if __name__ == "__main__":
     # Initialize the trading environment and the agent
     env = TradingEnv(preprocessed_data)
     agent = QLearningAgent(env.action_space)
+
+    # Create the user interface and get the symbol from the user
+    symbol = create_interface(agent, env, preprocessed_data)
 
     # Train the agent
     num_episodes = 1000
