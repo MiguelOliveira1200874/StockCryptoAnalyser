@@ -18,7 +18,8 @@ def fetch_data(symbol, function_name):
     if function_name == "DIGITAL_CURRENCY_DAILY":
         params["market"] = "USD"
 
-    # Send a GET request to the API
+    # Print the parameters and send a GET request to the API
+    print(params)
     response = requests.get(url, params=params)
 
     # If the request failed, print an error message and return None
