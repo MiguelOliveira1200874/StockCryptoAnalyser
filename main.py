@@ -10,18 +10,19 @@ if __name__ == "__main__":
 
     from data_fetching import fetch_data
 
-    # Fetch and preprocess stock data
-    stock_data = fetch_data(symbol, "TIME_SERIES_DAILY")
-    if stock_data is None:
-        print("Error fetching stock data. Exiting program.")
-        exit(1)
-    preprocessed_stock_data = preprocess_data(stock_data)
-    visualize_data(preprocessed_stock_data, symbol)
+    # Check if the symbol is for a stock or a cryptocurrency
+    if symbol in ["AAPL", "MSFT", "GOOGL", "AMZN", "FB"]:  # Add more stock symbols as needed
+        # Fetch and preprocess stock data
+        data = fetch_data(symbol, "TIME_SERIES_DAILY")
+        if data is None:
+            print("Error fetching stock data. Exiting program.")
+            exit(1)
+    else:
+        # Fetch and preprocess crypto data
+        data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY")
+        if data is None:
+            print("Error fetching crypto data. Exiting program.")
+            exit(1)
 
-    # Fetch and preprocess crypto data
-    crypto_data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY")
-    if crypto_data is None:
-        print("Error fetching crypto data. Exiting program.")
-        exit(1)
-    preprocessed_crypto_data = preprocess_data(crypto_data)
-    visualize_data(preprocessed_crypto_data, symbol)
+    preprocessed_data = preprocess_data(data)
+    visualize_data(preprocessed_data, symbol)
