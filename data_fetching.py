@@ -12,7 +12,7 @@ def fetch_data(symbol, function_name):
     params = {
         "function": function_name,
         "symbol": symbol,
-        "apikey": os.getenv("ALPHA_VANTAGE_API_KEY")
+        "apikey": "your_api_key"
     }
 
     if function_name == "DIGITAL_CURRENCY_DAILY":
