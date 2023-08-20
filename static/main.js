@@ -11,13 +11,16 @@ $(document).ready(function(){
             success: function(data) {
                 $("#data").html(JSON.stringify(data));
                 var ctx = document.getElementById('graph').getContext('2d');
+                var formattedData = Object.entries(data).map(([key, value]) => ({
+                    t: new Date(key),
+                    y: Number(value['4a. close (USD)'])
+                }));
                 var lineChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: Object.keys(data).map(key => new Date(key)),
                         datasets: [{
                             label: 'Close Price',
-                            data: Object.values(data).map(d => Number(d['4a. close (USD)'])),
+                            data: formattedData,
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
                         }]
