@@ -14,7 +14,7 @@ def fetch_data_route():
     if data is None:
         return jsonify({'error': 'Error fetching data.'}), 500
     preprocessed_data = preprocess_data(data)
-    return preprocessed_data.to_json()
+    return preprocessed_data[['date', '1a. open (USD)', '2a. high (USD)', '3a. low (USD)', '4a. close (USD)']].to_json()
 
 @app.route('/')
 def index():
