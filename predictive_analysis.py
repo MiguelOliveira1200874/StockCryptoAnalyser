@@ -30,8 +30,19 @@ class TradingEnv(gym.Env):
         # Execute one time step within the environment
         self.current_step += 1
 
+        # Get the current price from the dataframe
+        current_price = self.df.loc[self.current_step, '4a. close (USD)']
+
         # Execute the action and update the balance and shares
-        # ...
+        if action == 0:  # Buy
+            if self.balance > current_price:
+                self.balance -= current_price
+                self.shares += 1
+        elif action == 1:  # Sell
+            if self.shares > 0:
+                self.balance += current_price
+                self.shares -= 1
+        # action 2 means 'Hold', so we do nothing
 
         # Calculate the reward
         reward = self.balance - self.initial_balance
