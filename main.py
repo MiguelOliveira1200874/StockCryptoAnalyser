@@ -9,6 +9,9 @@ from agent import QLearningAgent
 if __name__ == "__main__":
     from data_fetching import fetch_data
 
+    # Create the user interface and get the symbol from the user
+    symbol = create_interface(agent, env, preprocessed_data)
+
     # Check if the symbol is for a stock or a cryptocurrency
     if symbol in ["AAPL", "MSFT", "GOOGL", "AMZN", "FB"]:  # Add more stock symbols as needed
         # Fetch and preprocess stock data
@@ -39,9 +42,6 @@ if __name__ == "__main__":
             next_state, reward, done, info = env.step(action)
             agent.learn(state, action, reward, next_state, done)
             state = next_state
-
-    # Create the user interface and get the symbol from the user
-    symbol = create_interface(agent, env, preprocessed_data)
 
     # Create the user interface and get the symbol from the user
     symbol = create_interface(agent, env, preprocessed_data)
