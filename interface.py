@@ -1,5 +1,5 @@
 # Code for the user interface
-def create_interface(agent, env):
+def create_interface(agent, env, data):
     print("Welcome to the Stocks and Crypto Analyzer!")
     while True:
         print("Please enter the symbol of the stock or cryptocurrency you want to analyze:")
@@ -13,6 +13,7 @@ def create_interface(agent, env):
                 print("Sell at current price")
             else:
                 print("Hold at current price")
+            display_important_levels(data)
             return symbol
         else:
             print("Invalid input. Please try again.")
@@ -25,3 +26,7 @@ def get_decision(agent, state):
         return "Sell at current price"
     else:
         return "Hold at current price"
+
+def display_important_levels(data):
+    print("Important Levels:")
+    print(data['Important Levels'])

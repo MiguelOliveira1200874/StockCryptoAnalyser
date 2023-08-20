@@ -23,7 +23,7 @@ if __name__ == "__main__":
             state = next_state
 
     # Create the user interface and get the symbol from the user
-    symbol = create_interface(agent, env)
+    symbol = create_interface(agent, env, preprocessed_data)
 
     from data_fetching import fetch_data
 
