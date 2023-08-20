@@ -1,9 +1,7 @@
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import plotly.offline as pyo
 
 # Functions for data visualization
-import io
-import base64
-import urllib
 
 def visualize_data(data, symbol):
     # Extract the closing prices
@@ -16,18 +14,8 @@ def visualize_data(data, symbol):
         return None
 
     # Create a plot
-    plt.figure(figsize=(10, 5))
-    plt.plot(closing_prices)
-    plt.title(f'Closing Prices of {symbol}')
-    plt.xlabel('Date')
-    plt.ylabel('Price')
-    plt.grid(True)
+    fig = go.Figure(data=[go.Scatter(x=closing_prices.index, y=closing_prices, mode='lines', name='closing prices')])
+    fig.update_layout(title=f'Closing Prices of {symbol}', xaxis_title='Date', yaxis_title='Price')
 
-    # Convert the plot to a PNG image
-    png_image = io.BytesIO()
-    plt.savefig(png_image, format='png')
-    png_image.seek(0)
-
-    # Encode the PNG image to base64
-    png_image_base64 = base64.b64encode(png_image.read())
-    return urllib.parse.quote(png_image_base64)
+    # Return the plot as HTML
+    return pyo.plot(fig, output_type='div')
