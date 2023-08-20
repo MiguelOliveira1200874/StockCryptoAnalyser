@@ -23,11 +23,13 @@
     $(document).ready(function(){
         $("#symbol-form").submit(function(e){
             e.preventDefault();
+            var symbol = $("#symbol").val();
+            var currency = $("#currency").val();
             $.ajax({
                 url: '/fetch_data',
                 type: 'post',
                 contentType: 'application/json',
-                data: JSON.stringify({ 'symbol': $("#symbol").val(), 'currency': $("#currency").val() }),
+                data: JSON.stringify({ 'symbol': symbol, 'currency': currency }),
                 success: function(data) {
                     $("#data").html(JSON.stringify(data));
                 },
