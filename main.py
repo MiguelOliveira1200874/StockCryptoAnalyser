@@ -1,14 +1,29 @@
 # Main entry point of our application
 from test import test_application
 from data_preprocessing import preprocess_data
-from interface import create_interface
+from interface import create_interface, get_decision
 from visualization import visualize_data
 from predictive_analysis import TradingEnv
 from agent import QLearningAgent
 
 if __name__ == "__main__":
+    # Initialize the trading environment and the agent
+    env = TradingEnv(preprocessed_data)
+    agent = QLearningAgent(env.action_space)
+
+    # Train the agent
+    num_episodes = 1000
+    for episode in range(num_episodes):
+        state = env.reset()
+        done = False
+        while not done:
+            action = agent.choose_action(state)
+            next_state, reward, done, info = env.step(action)
+            agent.learn(state, action, reward, next_state, done)
+            state = next_state
+
     # Create the user interface and get the symbol from the user
-    symbol = create_interface()
+    symbol = create_interface(agent, env)
 
     from data_fetching import fetch_data
 
