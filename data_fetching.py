@@ -4,7 +4,7 @@ import requests
 import pandas as pd
 
 # Function to fetch data from APIs
-def fetch_data(symbol, function_name):
+def fetch_data(symbol, function_name, currency):
     # URL of the Alpha Vantage API endpoint
     url = "https://www.alphavantage.co/query"
 
@@ -19,7 +19,7 @@ def fetch_data(symbol, function_name):
     }
 
     if function_name == "DIGITAL_CURRENCY_DAILY":
-        params["market"] = "USD"
+        params["market"] = currency
 
     # Print the parameters and send a GET request to the API
     print(params)
