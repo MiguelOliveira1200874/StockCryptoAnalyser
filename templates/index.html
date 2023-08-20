@@ -9,9 +9,16 @@
     <form id="symbol-form">
         <label for="symbol">Enter the symbol of the stock or cryptocurrency you want to analyze:</label>
         <input type="text" id="symbol" name="symbol" required>
+        <label for="currency">Choose a currency:</label>
+        <select id="currency" name="currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <!-- Add more options as needed -->
+        </select>
         <input type="submit" value="Submit">
     </form>
     <div id="data"></div>
+    <div id="graph"></div>
     <script>
     $(document).ready(function(){
         $("#symbol-form").submit(function(e){
