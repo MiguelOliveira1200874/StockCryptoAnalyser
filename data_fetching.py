@@ -59,7 +59,7 @@ def fetch_data(symbol, function_name, currency):
         data.columns = ['date', '1a. open (USD)', '1b. open (native)', '2a. high (USD)', '2b. high (native)', '3a. low (USD)', '3b. low (native)', '4a. close (USD)', '4b. close (native)', '5. volume', '6. market cap (USD)']
         data['4a. close (USD)'] = data['4a. close (USD)'].astype(float)
     data['date'] = pd.to_datetime(data['date'])
-    data = data.sort_index(ascending=False)
+    data = data.sort_values(by='date')
     data.reset_index(drop=True, inplace=True)
 
     # Pause to avoid hitting the API rate limit

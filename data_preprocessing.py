@@ -1,7 +1,7 @@
 # Functions for data cleaning and preprocessing
 def preprocess_data(data):
     # Remove any rows with missing data
-    data = data.dropna()
+    data = data.dropna(subset=['date'])
 
     # Ensure 'date' column is kept
     if 'date' not in data.columns:
