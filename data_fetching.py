@@ -31,6 +31,9 @@ def fetch_data(symbol, function_name):
 
     # Extract the time series data from the JSON response
     time_series_key = "Time Series (Daily)" if "Time Series (Daily)" in json_response else "Time Series (Digital Currency Daily)"
+    if time_series_key not in json_response:
+        print(f"Error: The key '{time_series_key}' was not found in the JSON response.")
+        return None
     time_series_data = json_response[time_series_key]
 
     # Convert the time series data to a pandas DataFrame and clean it
