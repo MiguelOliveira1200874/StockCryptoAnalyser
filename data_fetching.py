@@ -12,7 +12,7 @@ def fetch_data(symbol, function_name):
     params = {
         "function": function_name,
         "symbol": symbol,
-        "apikey": "your_api_key"
+        "apikey": "MRA4JAKP2W181V2P"
     }
 
     if function_name == "DIGITAL_CURRENCY_DAILY":
