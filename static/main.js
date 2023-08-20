@@ -34,6 +34,9 @@ $(document).ready(function(){
                                 ticks: {
                                     display: false
                                 }
+                            },
+                            x: {
+                                display: false
                             }
                         }
                     }
