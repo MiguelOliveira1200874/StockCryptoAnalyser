@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 @app.route('/fetch_data', methods=['POST'])
 def fetch_data_route():
+    if not request.json or 'symbol' not in request.json or 'currency' not in request.json:
+        return jsonify({'error': 'Request must have a JSON body with a "symbol" and "currency" field.'}), 400
     symbol = request.json['symbol']
     currency = request.json['currency']
     data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY", currency)
