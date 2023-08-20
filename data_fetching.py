@@ -59,7 +59,9 @@ def fetch_data(symbol, function_name, currency):
 
     # Convert the time series data to a pandas DataFrame with 'date' and '4a. close (USD)' columns
     data = pd.DataFrame.from_dict(time_series_data, orient='index')
-    data.reset_index(inplace=True)
+    if 'date' not in data.columns:
+        data.reset_index(inplace=True)
+        data.rename(columns={'index': 'date'}, inplace=True)
     if function_name == "TIME_SERIES_DAILY":
         data.columns = ['date', '1. open', '2. high', '3. low', '4. close', '5. volume']
         data['4. close'] = data['4. close'].astype(float)
