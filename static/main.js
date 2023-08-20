@@ -14,10 +14,10 @@ $(document).ready(function(){
                 var lineChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: Object.keys(data),
+                        labels: Object.keys(data).map(key => new Date(key)),
                         datasets: [{
                             label: 'Close Price',
-                            data: Object.values(data).map(d => d['4a. close (USD)']),
+                            data: Object.values(data).map(d => Number(d['4a. close (USD)'])),
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
                         }]
