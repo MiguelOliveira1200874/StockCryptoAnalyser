@@ -3,6 +3,7 @@
 <head>
     <title>Stocks and Crypto Analyzer</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Stocks and Crypto Analyzer</h1>
@@ -18,7 +19,7 @@
         <input type="submit" value="Submit">
     </form>
     <div id="data"></div>
-    <div id="graph"></div>
+    <canvas id="graph"></canvas>
     <script>
     $(document).ready(function(){
         $("#symbol-form").submit(function(e){
@@ -32,6 +33,19 @@
                 data: JSON.stringify({ 'symbol': symbol, 'currency': currency }),
                 success: function(data) {
                     $("#data").html(JSON.stringify(data));
+                    var ctx = document.getElementById('graph').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                label: 'Price',
+                                data: Object.values(data),
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.1
+                            }]
+                        }
+                    });
                 },
                 error: function(error) {
                     $("#data").html(JSON.stringify(error));
