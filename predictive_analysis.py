@@ -27,8 +27,14 @@ class TradingEnv(gym.Env):
 
     def reset(self):
         # Reset the state of the environment to an initial state
-        pass
+        self.current_step = 0
+        self.total_reward = 0.0
+        self.done = False
+        return self._get_observation()
 
     def render(self, mode='human', close=False):
         # Render the environment to the screen
-        pass
+        if self.done:
+            print(f"Info: {self.total_reward}")
+        else:
+            print(f"Day: {self.current_step}, Price: {self.df.loc[self.current_step, '4a. close (USD)']}")
