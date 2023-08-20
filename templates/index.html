@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stocks and Crypto Analyzer</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Stocks and Crypto Analyzer</h1>
+    <form id="symbol-form">
+        <label for="symbol">Enter the symbol of the stock or cryptocurrency you want to analyze:</label>
+        <input type="text" id="symbol" name="symbol" required>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="data"></div>
+    <script>
+    $(document).ready(function(){
+        $("#symbol-form").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/fetch_data',
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'symbol': $("#symbol").val() }),
+                success: function(data) {
+                    $("#data").html(JSON.stringify(data));
+                },
+                error: function(error) {
+                    $("#data").html(JSON.stringify(error));
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
