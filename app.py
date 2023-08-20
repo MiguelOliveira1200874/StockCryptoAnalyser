@@ -6,15 +6,19 @@ app = Flask(__name__)
 
 @app.route('/fetch_data', methods=['POST'])
 def fetch_data_route():
-    if not request.json or 'symbol' not in request.json or 'currency' not in request.json:
-        return jsonify({'error': 'Request must have a JSON body with a "symbol" and "currency" field.'}), 400
-    symbol = request.json['symbol']
-    currency = request.json['currency']
-    data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY", currency)
-    if data is None:
-        return jsonify({'error': 'Error fetching data.'}), 500
-    preprocessed_data = preprocess_data(data)
-    return preprocessed_data[['date', '1a. open (USD)', '2a. high (USD)', '3a. low (USD)', '4a. close (USD)']].to_json()
+    try:
+        if not request.json or 'symbol' not in request.json or 'currency' not in request.json:
+            return jsonify({'error': 'Request must have a JSON body with a "symbol" and "currency" field.'}), 400
+        symbol = request.json['symbol']
+        currency = request.json['currency']
+        data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY", currency)
+        if data is None:
+            return jsonify({'error': 'Error fetching data.'}), 500
+        preprocessed_data = preprocess_data(data)
+        return preprocessed_data[['date', '1a. open (USD)', '2a. high (USD)', '3a. low (USD)', '4a. close (USD)']].to_json()
+    except Exception as e:
+        print(f"Error in fetch_data_route: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/')
 def index():

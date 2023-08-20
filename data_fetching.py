@@ -21,18 +21,26 @@ def fetch_data(symbol, function_name, currency):
     if function_name == "DIGITAL_CURRENCY_DAILY":
         params["market"] = currency
 
-    # Print the parameters and send a GET request to the API
-    print(params)
-    response = requests.get(url, params=params)
-
-    # If the request failed, print an error message and return None
-    if response.status_code != 200:
-        print(f"Error fetching data for {symbol}: {response.status_code}")
+    try:
+        # Print the parameters and send a GET request to the API
+        print(params)
+        response = requests.get(url, params=params)
+    except Exception as e:
+        print(f"Error sending API request: {e}")
         return None
 
-    # Convert the response to JSON and print the response
-    json_response = response.json()
-    print(json_response)
+    try:
+        # If the request failed, print an error message and return None
+        if response.status_code != 200:
+            print(f"Error fetching data for {symbol}: {response.status_code}")
+            return None
+
+        # Convert the response to JSON and print the response
+        json_response = response.json()
+        print(json_response)
+    except Exception as e:
+        print(f"Error processing API response: {e}")
+        return None
 
     # Extract the time series data from the JSON response
     if function_name == "TIME_SERIES_DAILY":
