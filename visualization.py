@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 # Functions for data visualization
 def visualize_data(data, symbol):
     # Extract the closing prices
-    closing_prices = data['4. close']
+    closing_prices = data['4a. close (USD)']
 
     # Create a plot
     plt.figure(figsize=(10, 5))
