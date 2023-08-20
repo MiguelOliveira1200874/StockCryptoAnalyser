@@ -26,8 +26,9 @@ def fetch_data(symbol, function_name):
         print(f"Error fetching data for {symbol}: {response.status_code}")
         return None
 
-    # Convert the response to JSON
+    # Convert the response to JSON and print the response
     json_response = response.json()
+    print(json_response)
 
     # Extract the time series data from the JSON response
     if function_name == "TIME_SERIES_DAILY":
