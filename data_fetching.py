@@ -27,10 +27,16 @@ def fetch_data(symbol, function_name):
         return None
 
     # Convert the response to JSON
-    data = response.json()
+    json_response = response.json()
 
-    # Convert the data to a pandas DataFrame and clean it
-    data = pd.DataFrame(data)
+    # Extract the time series data from the JSON response
+    if function_name == "TIME_SERIES_DAILY":
+        time_series_data = json_response["Time Series (Daily)"]
+    elif function_name == "DIGITAL_CURRENCY_DAILY":
+        time_series_data = json_response["Time Series (Digital Currency Daily)"]
+
+    # Convert the time series data to a pandas DataFrame and clean it
+    data = pd.DataFrame(time_series_data)
     # TODO: Add data cleaning code here
 
     # Pause to avoid hitting the API rate limit
