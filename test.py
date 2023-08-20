@@ -1,5 +1,5 @@
 # Test cases for our application
-from data_fetching import fetch_stock_data, fetch_crypto_data
+from data_fetching import fetch_data
 
 def test_application():
     # Test the fetch_stock_data function
