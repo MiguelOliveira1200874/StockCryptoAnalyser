@@ -30,7 +30,10 @@ $(document).ready(function(){
                             y: {
                                 beginAtZero: false,
                                 grace: '5%',
-                                display: false
+                                display: false,
+                                ticks: {
+                                    display: false
+                                }
                             }
                         }
                     }
