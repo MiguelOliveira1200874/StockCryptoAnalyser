@@ -24,6 +24,14 @@ $(document).ready(function(){
                             borderColor: 'rgb(75, 192, 192)',
                             tension: 0.1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grace: '5%'
+                            }
+                        }
                     }
                 });
 
