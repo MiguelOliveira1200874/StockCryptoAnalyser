@@ -49,11 +49,15 @@ def fetch_data(symbol, function_name):
     # Convert the time series data to a pandas DataFrame with 'date' and '4a. close (USD)' columns
     data = pd.DataFrame.from_dict(time_series_data, orient='index')
     data.reset_index(inplace=True)
-    data.columns = ['date', '1a. open (USD)', '1b. open (native)', '2a. high (USD)', '2b. high (native)', '3a. low (USD)', '3b. low (native)', '4a. close (USD)', '4b. close (native)', '5. volume', '6. market cap (USD)']
+    if function_name == "TIME_SERIES_DAILY":
+        data.columns = ['date', '1. open', '2. high', '3. low', '4. close', '5. volume']
+        data['4. close'] = data['4. close'].astype(float)
+    elif function_name == "DIGITAL_CURRENCY_DAILY":
+        data.columns = ['date', '1a. open (USD)', '1b. open (native)', '2a. high (USD)', '2b. high (native)', '3a. low (USD)', '3b. low (native)', '4a. close (USD)', '4b. close (native)', '5. volume', '6. market cap (USD)']
+        data['4a. close (USD)'] = data['4a. close (USD)'].astype(float)
     data['date'] = pd.to_datetime(data['date'])
     data.set_index('date', inplace=True)
     data = data.sort_index()
-    data['4a. close (USD)'] = data['4a. close (USD)'].astype(float)
 
     # Pause to avoid hitting the API rate limit
     time.sleep(12)
