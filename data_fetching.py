@@ -30,10 +30,8 @@ def fetch_data(symbol, function_name):
     json_response = response.json()
 
     # Extract the time series data from the JSON response
-    if function_name == "TIME_SERIES_DAILY":
-        time_series_data = json_response["Time Series (Daily)"]
-    elif function_name == "DIGITAL_CURRENCY_DAILY":
-        time_series_data = json_response["Time Series (Digital Currency Daily)"]
+    time_series_key = "Time Series (Daily)" if "Time Series (Daily)" in json_response else "Time Series (Digital Currency Daily)"
+    time_series_data = json_response[time_series_key]
 
     # Convert the time series data to a pandas DataFrame and clean it
     data = pd.DataFrame(time_series_data)
