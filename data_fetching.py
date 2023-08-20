@@ -46,9 +46,14 @@ def fetch_data(symbol, function_name):
 
     time_series_data = json_response[time_series_key]
 
-    # Convert the time series data to a pandas DataFrame and clean it
-    data = pd.DataFrame(time_series_data)
-    # TODO: Add data cleaning code here
+    # Convert the time series data to a pandas DataFrame with 'date' and '4. close' columns
+    data = pd.DataFrame.from_dict(time_series_data, orient='index')
+    data.reset_index(inplace=True)
+    data.columns = ['date', '1. open', '2. high', '3. low', '4. close', '5. volume']
+    data['date'] = pd.to_datetime(data['date'])
+    data.set_index('date', inplace=True)
+    data = data.sort_index()
+    data['4. close'] = data['4. close'].astype(float)
 
     # Pause to avoid hitting the API rate limit
     time.sleep(12)
