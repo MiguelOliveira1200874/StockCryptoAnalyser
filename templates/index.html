@@ -2,75 +2,39 @@
 <html>
 <head>
     <title>Stocks and Crypto Analyzer</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
 </head>
 <body>
-    <h1>Stocks and Crypto Analyzer</h1>
-    <form id="symbol-form">
-        <label for="symbol">Enter the symbol of the stock or cryptocurrency you want to analyze:</label>
-        <input type="text" id="symbol" name="symbol" required>
-        <label for="currency">Choose a currency:</label>
-        <select id="currency" name="currency">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <!-- Add more options as needed -->
-        </select>
-        <input type="submit" value="Submit">
-    </form>
-    <div id="data"></div>
-    <canvas id="graph"></canvas>
-    <script>
-    $(document).ready(function(){
-        $("#symbol-form").submit(function(e){
-            e.preventDefault();
-            var symbol = $("#symbol").val();
-            var currency = $("#currency").val();
-            $.ajax({
-                url: '/fetch_data',
-                type: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify({ 'symbol': symbol, 'currency': currency }),
-                success: function(data) {
-                    $("#data").html(JSON.stringify(data));
-                    var ctx = document.getElementById('graph').getContext('2d');
-                    var lineChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: Object.keys(data),
-                            datasets: [{
-                                label: 'Close Price',
-                                data: Object.values(data).map(d => d['4a. close (USD)']),
-                                borderColor: 'rgb(75, 192, 192)',
-                                tension: 0.1
-                            }]
-                        }
-                    });
-
-                    var candlestickCtx = document.getElementById('candlestick-chart').getContext('2d');
-                    var candlestickChart = new Chart(candlestickCtx, {
-                        type: 'candlestick',
-                        data: {
-                            datasets: [{
-                                label: 'Candlestick',
-                                data: Object.values(data).map(d => ({
-                                    t: new Date(d.date),
-                                    o: d['1a. open (USD)'],
-                                    h: d['2a. high (USD)'],
-                                    l: d['3a. low (USD)'],
-                                    c: d['4a. close (USD)']
-                                }))
-                            }]
-                        }
-                    });
-                },
-                error: function(error) {
-                    $("#data").html(JSON.stringify(error));
-                }
-            });
-        });
-    });
-    </script>
+    <header>
+        <h1>Stocks and Crypto Analyzer</h1>
+    </header>
+    <main>
+        <form id="symbol-form">
+            <div class="form-group">
+                <label for="symbol">Enter the symbol of the stock or cryptocurrency you want to analyze:</label>
+                <input type="text" id="symbol" name="symbol" required>
+            </div>
+            <div class="form-group">
+                <label for="currency">Choose a currency:</label>
+                <select id="currency" name="currency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+        <div id="data"></div>
+        <canvas id="graph"></canvas>
+    </main>
+    <footer>
+        <p>&copy; 2022 Stocks and Crypto Analyzer</p>
+    </footer>
+    <script src="/static/main.js"></script>
 </body>
 </html>
