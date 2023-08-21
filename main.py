@@ -7,6 +7,21 @@ from predictive_analysis import TradingEnv
 from agent import QLearningAgent
 
 if __name__ == "__main__":
+    from data_fetching import fetch_data
+
+    # Create the user interface and get the symbol from the user
+    symbol = create_interface(agent, env, preprocessed_data)
+
+    # Fetch and preprocess data
+    data = fetch_data(symbol, "TIME_SERIES_DAILY")
+    if data is None:
+        data = fetch_data(symbol, "DIGITAL_CURRENCY_DAILY")
+    if data is None:
+        print("Error fetching data. Exiting program.")
+        exit(1)
+
+    preprocessed_data = preprocess_data(data)
+
     # Initialize the trading environment and the agent
     env = TradingEnv(preprocessed_data)
     agent = QLearningAgent(env.action_space)
@@ -21,9 +36,6 @@ if __name__ == "__main__":
             next_state, reward, done, info = env.step(action)
             agent.learn(state, action, reward, next_state, done)
             state = next_state
-
-    # Create the user interface and get the symbol from the user
-    symbol = create_interface(agent, env, preprocessed_data)
 
     from data_fetching import fetch_data
 
@@ -46,6 +58,9 @@ if __name__ == "__main__":
     # Initialize the trading environment and the agent
     env = TradingEnv(preprocessed_data)
     agent = QLearningAgent(env.action_space)
+
+    # Create the user interface and get the symbol from the user
+    symbol = create_interface(agent, env, preprocessed_data)
 
     # Train the agent
     num_episodes = 1000

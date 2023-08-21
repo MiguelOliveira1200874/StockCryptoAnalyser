@@ -4,7 +4,7 @@ import requests
 import pandas as pd
 
 # Function to fetch data from APIs
-def fetch_data(symbol, function_name):
+def fetch_data(symbol, function_name, currency, date_range=None):
     # URL of the Alpha Vantage API endpoint
     url = "https://www.alphavantage.co/query"
 
@@ -19,20 +19,28 @@ def fetch_data(symbol, function_name):
     }
 
     if function_name == "DIGITAL_CURRENCY_DAILY":
-        params["market"] = "USD"
+        params["market"] = currency
 
-    # Print the parameters and send a GET request to the API
-    print(params)
-    response = requests.get(url, params=params)
-
-    # If the request failed, print an error message and return None
-    if response.status_code != 200:
-        print(f"Error fetching data for {symbol}: {response.status_code}")
+    try:
+        # Print the parameters and send a GET request to the API
+        print(params)
+        response = requests.get(url, params=params)
+    except Exception as e:
+        print(f"Error sending API request: {e}")
         return None
 
-    # Convert the response to JSON and print the response
-    json_response = response.json()
-    print(json_response)
+    try:
+        # If the request failed, print an error message and return None
+        if response.status_code != 200:
+            print(f"Error fetching data for {symbol}: {response.status_code}")
+            return None
+
+        # Convert the response to JSON and print the response
+        json_response = response.json()
+        print(json_response)
+    except Exception as e:
+        print(f"Error processing API response: {e}")
+        return None
 
     # Extract the time series data from the JSON response
     if function_name == "TIME_SERIES_DAILY":
@@ -51,7 +59,9 @@ def fetch_data(symbol, function_name):
 
     # Convert the time series data to a pandas DataFrame with 'date' and '4a. close (USD)' columns
     data = pd.DataFrame.from_dict(time_series_data, orient='index')
-    data.reset_index(inplace=True)
+    if 'date' not in data.columns:
+        data.reset_index(inplace=True)
+        data.rename(columns={'index': 'date'}, inplace=True)
     if function_name == "TIME_SERIES_DAILY":
         data.columns = ['date', '1. open', '2. high', '3. low', '4. close', '5. volume']
         data['4. close'] = data['4. close'].astype(float)
@@ -59,8 +69,8 @@ def fetch_data(symbol, function_name):
         data.columns = ['date', '1a. open (USD)', '1b. open (native)', '2a. high (USD)', '2b. high (native)', '3a. low (USD)', '3b. low (native)', '4a. close (USD)', '4b. close (native)', '5. volume', '6. market cap (USD)']
         data['4a. close (USD)'] = data['4a. close (USD)'].astype(float)
     data['date'] = pd.to_datetime(data['date'])
-    data.set_index('date', inplace=True)
-    data = data.sort_index()
+    data = data.sort_values(by='date')
+    data.reset_index(drop=True, inplace=True)
 
     # Pause to avoid hitting the API rate limit
     time.sleep(12)

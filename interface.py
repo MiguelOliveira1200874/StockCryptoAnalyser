@@ -3,10 +3,12 @@ def get_indicators():
     print("Please select the indicators you want to see:")
     print("1. Moving Average")
     print("2. Support and Resistance")
-    print("3. Important Levels")
-    print("4. RSI")
-    print("5. MACD")
-    print("6. Bollinger Bands")
+    print("3. Resistance Levels")
+    print("4. Support Levels")
+    print("5. Important Levels")
+    print("6. RSI")
+    print("7. MACD")
+    print("8. Bollinger Bands")
     print("Enter the numbers of the indicators you want to see, separated by commas:")
     indicators = input().strip().split(',')
     return indicators
@@ -50,14 +52,20 @@ def display_important_levels(data, indicators):
             print("Support and Resistance:")
             print(data['Support'], data['Resistance'])
         elif indicator == '3':
+            print("Resistance Levels:")
+            print(data['Resistance Levels'])
+        elif indicator == '4':
+            print("Support Levels:")
+            print(data['Support Levels'])
+        elif indicator == '5':
             print("Important Levels:")
             print(data['Important Levels'])
-        elif indicator == '4':
+        elif indicator == '6':
             print("RSI:")
             print(data['RSI'])
-        elif indicator == '5':
+        elif indicator == '7':
             print("MACD:")
             print(data['MACD'])
-        elif indicator == '6':
+        elif indicator == '8':
             print("Bollinger Bands:")
             print(data['Bollinger Bands'])
